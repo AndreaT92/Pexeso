@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             Tlacitko1 = new Button();
             Tlacitko2 = new Button();
             Tlacitko3 = new Button();
@@ -44,6 +45,9 @@
             Tlacitko8 = new Button();
             Tlacitko12 = new Button();
             Tlacitko16 = new Button();
+            Timer = new System.Windows.Forms.Timer(components);
+            LabelTime = new Label();
+            LabelNaPokusy = new Label();
             SuspendLayout();
             // 
             // Tlacitko1
@@ -254,11 +258,35 @@
             Tlacitko16.UseVisualStyleBackColor = false;
             Tlacitko16.Click += StiskTlacitka_Click;
             // 
-            // Form1
+            // Timer
+            // 
+            Timer.Enabled = true;
+            Timer.Interval = 1000;
+            // 
+            // LabelTime
+            // 
+            LabelTime.AutoSize = true;
+            LabelTime.Location = new Point(41, 725);
+            LabelTime.Name = "LabelTime";
+            LabelTime.Size = new Size(0, 25);
+            LabelTime.TabIndex = 17;
+            // 
+            // LabelNaPokusy
+            // 
+            LabelNaPokusy.AutoSize = true;
+            LabelNaPokusy.Location = new Point(485, 725);
+            LabelNaPokusy.Name = "LabelNaPokusy";
+            LabelNaPokusy.Size = new Size(72, 25);
+            LabelNaPokusy.TabIndex = 18;
+            LabelNaPokusy.Text = "Pokusy:";
+            // 
+            // MojePrvniPexeso
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(822, 727);
+            ClientSize = new Size(1127, 822);
+            Controls.Add(LabelNaPokusy);
+            Controls.Add(LabelTime);
             Controls.Add(Tlacitko16);
             Controls.Add(Tlacitko12);
             Controls.Add(Tlacitko8);
@@ -275,9 +303,10 @@
             Controls.Add(Tlacitko3);
             Controls.Add(Tlacitko2);
             Controls.Add(Tlacitko1);
-            Name = "Form1";
+            Name = "MojePrvniPexeso";
             Text = "Form1";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -298,5 +327,8 @@
         private Button Tlacitko8;
         private Button Tlacitko12;
         private Button Tlacitko16;
+        private System.Windows.Forms.Timer Timer;
+        private Label LabelTime;
+        private Label LabelNaPokusy;
     }
 }

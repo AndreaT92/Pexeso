@@ -8,15 +8,40 @@ namespace Pexeso
         bool vyhraliJste = false;
         bool vsechnaVypnuta = false;
         int pocetStisknuti = 0;
+        int pocetPokusu = 0;
+        DateTime casZahajeniHry;
+        bool ZacinaHra = true;
+
         public MojePrvniPexeso()
         {
             InitializeComponent();
+
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+
+            TimeSpan uplynulyCas = DateTime.Now - casZahajeniHry;
+
+
+            LabelTime.Text = string.Format("{0:D2}:{1:D2}", uplynulyCas.Minutes, uplynulyCas.Seconds);
+        }
         private void StiskTlacitka_Click(object sender, EventArgs e)
         {
+            if (ZacinaHra)
+            {
+                casZahajeniHry = DateTime.Now;
+                Timer.Start();
+                Timer.Tick += Timer_Tick;
+                ZacinaHra = false;
+            }
+
             pocetStisknuti++;
+
+            LabelNaPokusy.Text = $" Pokusy: {pocetPokusu.ToString()}";
             Button tlacitko = (Button)sender;
+
+
             if (!JeSpravne)
             {
                 switch (pocetStisknuti)
@@ -29,24 +54,31 @@ namespace Pexeso
                     case 2:
                         druheTlacitko = tlacitko;
                         tlacitko.ForeColor = SystemColors.ActiveCaptionText;
+
+                        if (prvniTlacitko == druheTlacitko)
+                        {
+                            pocetStisknuti = 1;
+                        }
+                        pocetPokusu++;
                         break;
 
                     case 3:
-                        if (prvniTlacitko.Text != druheTlacitko.Text)
+                        if (prvniTlacitko != druheTlacitko)
                         {
-                            prvniTlacitko.ForeColor = SystemColors.ActiveCaption;
-                            druheTlacitko.ForeColor = SystemColors.ActiveCaption;
-                            JeSpravne = false;
-
+                            if (prvniTlacitko.Text == druheTlacitko.Text)
+                            {
+                                JeSpravne = true;
+                            }
+                            else
+                            {
+                                prvniTlacitko.ForeColor = SystemColors.ActiveCaption;
+                                druheTlacitko.ForeColor = SystemColors.ActiveCaption;
+                                JeSpravne = false;
+                            }
                         }
-                        else
-                        {
-                            JeSpravne = true;
 
-                        }
                         pocetStisknuti = 0;
                         break;
-
                 }
                 if (JeSpravne)
                 {
@@ -80,12 +112,10 @@ namespace Pexeso
 
                 if (result == DialogResult.Yes)
                 {
-
                     ResetHry();
                 }
                 else
                 {
-
                     Application.Exit();
                 }
             }
@@ -96,8 +126,13 @@ namespace Pexeso
             {
                 tlacitko.ForeColor = SystemColors.ActiveCaption;
                 tlacitko.Enabled = true;
+                casZahajeniHry = DateTime.Now;
+                ZacinaHra = true;
+                pocetPokusu = 0;
+                LabelNaPokusy.Text = "Pokusy: ";
             }
         }
+
     }
 }
 
