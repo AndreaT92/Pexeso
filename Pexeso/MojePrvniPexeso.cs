@@ -4,13 +4,14 @@ namespace Pexeso
     {
         Button prvniTlacitko;
         Button druheTlacitko;
-        bool JeSpravne = false;
+        Button tretiTlacitko;
+        bool jeSpravne = false;
         bool vyhraliJste = false;
         bool vsechnaVypnuta = false;
         int pocetStisknuti = 0;
         int pocetPokusu = 0;
         DateTime casZahajeniHry;
-        bool ZacinaHra = true;
+        bool zacinaHra = true;
 
         public MojePrvniPexeso()
         {
@@ -28,12 +29,12 @@ namespace Pexeso
         }
         private void StiskTlacitka_Click(object sender, EventArgs e)
         {
-            if (ZacinaHra)
+            if (zacinaHra)
             {
                 casZahajeniHry = DateTime.Now;
                 Timer.Start();
                 Timer.Tick += Timer_Tick;
-                ZacinaHra = false;
+                zacinaHra = false;
             }
 
             pocetStisknuti++;
@@ -42,7 +43,7 @@ namespace Pexeso
             Button tlacitko = (Button)sender;
 
 
-            if (!JeSpravne)
+            if (!jeSpravne)
             {
                 switch (pocetStisknuti)
                 {
@@ -67,25 +68,25 @@ namespace Pexeso
                         {
                             if (prvniTlacitko.Text == druheTlacitko.Text)
                             {
-                                JeSpravne = true;
+                                jeSpravne = true;
                             }
                             else
                             {
                                 prvniTlacitko.ForeColor = SystemColors.ActiveCaption;
                                 druheTlacitko.ForeColor = SystemColors.ActiveCaption;
-                                JeSpravne = false;
+                                jeSpravne = false;
                             }
                         }
 
                         pocetStisknuti = 0;
                         break;
                 }
-                if (JeSpravne)
+                if (jeSpravne)
                 {
 
                     prvniTlacitko.Enabled = false;
                     druheTlacitko.Enabled = false;
-                    JeSpravne = false;
+                    jeSpravne = false;
                     KontrolaVyhry();
                 }
 
@@ -108,6 +109,7 @@ namespace Pexeso
 
             if (vyhraliJste)
             {
+                Timer.Stop();
                 DialogResult result = MessageBox.Show("Vyhráli jste! Chcete hrát znovu?", "Gratulujeme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
@@ -122,17 +124,18 @@ namespace Pexeso
         }
         private void ResetHry()
         {
+            
             foreach (Button tlacitko in this.Controls.OfType<Button>())
             {
                 tlacitko.ForeColor = SystemColors.ActiveCaption;
                 tlacitko.Enabled = true;
                 casZahajeniHry = DateTime.Now;
-                ZacinaHra = true;
+                zacinaHra = true;
                 pocetPokusu = 0;
                 LabelNaPokusy.Text = "Pokusy: ";
             }
         }
-
-    }
 }
+}
+
 
