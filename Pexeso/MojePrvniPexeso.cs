@@ -4,7 +4,6 @@ namespace Pexeso
     {
         Button prvniTlacitko;
         Button druheTlacitko;
-        Button tretiTlacitko;
         bool jeSpravne = false;
         bool vyhraliJste = false;
         bool vsechnaVypnuta = false;
@@ -124,7 +123,7 @@ namespace Pexeso
         }
         private void ResetHry()
         {
-            
+
             foreach (Button tlacitko in this.Controls.OfType<Button>())
             {
                 tlacitko.ForeColor = SystemColors.ActiveCaption;
@@ -135,7 +134,9 @@ namespace Pexeso
                 LabelNaPokusy.Text = "Pokusy: ";
             }
         }
+    }
 }
-}
+
+
 
 
